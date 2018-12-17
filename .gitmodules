@@ -1,3 +1,4 @@
 [submodule "slack_resources"]
 	path = slack_resources
 	url = git@github.com:mmmpa/slack_resources.git
+git

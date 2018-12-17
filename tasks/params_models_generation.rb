@@ -67,7 +67,7 @@ class ParamsModelsGeneration
       a + Array(convert(k, v)).map { |s| '  ' + s }
     end
   end
-
+ 
   def convert(k, v)
     type, ref = pick_ref(v)
 
