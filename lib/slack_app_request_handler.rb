@@ -1,7 +1,8 @@
 require 'slack_app_request_handler/version'
 
 module SlackAppRequestHandler
-  require 'slack_app_request_handler/type_detect'
+  require 'slack_app_request_handler/type_detection'
+  require 'slack_app_request_handler/parametarize'
 
   # # Event Subscriptions
   #
@@ -52,9 +53,11 @@ module SlackAppRequestHandler
 
   require 'ostruct'
   class Router
+    include Parameterize
+
     def initialize(options, params)
       @options = OpenStruct.new(options)
-      @params = OpenStruct.new(params)
+      @raw_params = OpenStruct.new(params)
     end
 
     def execute!
@@ -62,23 +65,30 @@ module SlackAppRequestHandler
 
       case
       when url_verification?
-        { challenge: @params.challenge }
+        { challenge: @raw_params.challenge }
       else
-        Handler.new
+        Handler.new(raw_params: @raw_params, params: params)
       end
     end
 
     def authorize!
-      raise InvalidToken if @options.auth && @options.token != @params.token
+      raise InvalidToken if @options.auth && @options.token != @raw_params.token
     end
 
     def url_verification?
-      @params.type == 'url_verification'
+      @raw_params.type == 'url_verification'
     end
   end
 
   class Handler
-    include TypeDetect
+    include TypeDetection
+
+    attr_reader :raw_params, :params
+
+    def initialize(raw_params:, params:)
+      @raw_params = raw_params
+      @params = params
+    end
   end
 
   class Error < StandardError

@@ -2,6 +2,7 @@ AllCops:
   TargetRubyVersion: 2.5
   Exclude:
     - vendor/bundle/**/*
+    - slack_resources/**/*
 Rails:
   Enabled: true
 

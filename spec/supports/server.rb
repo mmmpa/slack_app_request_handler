@@ -10,13 +10,13 @@ handler = SlackAppRequestHandler.new(
   token: ENV['TOKEN']
 )
 
-post '/ut' do
+post '/' do
   content_type :json
 
   detected = params.presence || JSON.parse(request.body.read)
 
   pp detected
   handler.handle(detected) {
-    pp :inner
+    pp params, params.to_raw
   }.to_json
 end
