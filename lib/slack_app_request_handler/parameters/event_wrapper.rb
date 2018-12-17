@@ -2,7 +2,7 @@ module SlackAppRequestHandler
   module Parameters
     class EventWrapper
       attr_reader :params, :token, :team_id, :api_app_id, :event, :channel_type,
-        :type, :event_id, :event_time, :authed_users
+                  :type, :event_id, :event_time, :authed_users
 
       def initialize(params)
         @params = params

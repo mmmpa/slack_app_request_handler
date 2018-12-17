@@ -8,7 +8,7 @@ class ParamsModelsGeneration
   end
 
   def execute!
-    models.each do |k, v|
+    models.each do |k, v| # rubocop:disable Metrics/BlockLength:
       file_name_base = k.tr('.', '_')
       class_name = file_name_base.camelize
       attributes = v['properties']
@@ -16,17 +16,17 @@ class ParamsModelsGeneration
       inner =
         if attributes.present?
           defs = parameterize(attributes).join("\n")
-          <<~INNER
-            attr_reader :params, :event_wrapper, #{attributes.map { |a, _| ":#{a}" }.join(', ')}
+          <<-INNER
+        attr_reader :params, :event_wrapper, #{attributes.map { |a, _| ":#{a}" }.join(', ')}
 
-            def initialize(params, event_wrapper = nil)
-              @params = params
-              @event_wrapper = event_wrapper && ::SlackAppRequestHandler::Parameters::EventWrapper.new(event_wrapper)
-              #{defs}
-            end
+        def initialize(params, event_wrapper = nil)
+          @params = params
+          @event_wrapper = event_wrapper && ::SlackAppRequestHandler::Parameters::EventWrapper.new(event_wrapper)
+          #{defs}
+        end
           INNER
         else
-          <<~INNER
+          <<-INNER
             attr_reader :params, :event_wrapper
 
             def initialize(params, event_wrapper = nil)
@@ -43,15 +43,15 @@ class ParamsModelsGeneration
         #
         module SlackAppRequestHandler
           module Parameters
-          module EventApi
-            class #{class_name}
+            module EventApi
+              class #{class_name}
         #{inner.to_s.chomp}
 
-              def to_raw
-                params.to_h
+                def to_raw
+                  params.to_h
+                end
               end
             end
-          end
           end
         end
       MODULE
@@ -67,7 +67,7 @@ class ParamsModelsGeneration
       a + Array(convert(k, v)).map { |s| '  ' + s }
     end
   end
- 
+
   def convert(k, v)
     type, ref = pick_ref(v)
 
@@ -99,8 +99,6 @@ class ParamsModelsGeneration
       [:class, "::SlackAppRequestHandler::Parameters::EventApi::#{name}"]
     when timestamps?(key)
       [:ts]
-    else
-      nil
     end
   end
 

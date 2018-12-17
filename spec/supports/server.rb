@@ -17,6 +17,6 @@ post '/' do
 
   pp detected
   handler.handle(detected) {
-    pp params, params.to_raw
+    pp params
   }.to_json
 end
