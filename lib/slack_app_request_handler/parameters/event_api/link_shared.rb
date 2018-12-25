@@ -12,7 +12,7 @@ module SlackAppRequestHandler
           @params = params
           @event_wrapper = event_wrapper && ::SlackAppRequestHandler::Parameters::EventWrapper.new(event_wrapper)
           @channel = params['channel']
-          @links = params['links']
+          @links = params['links'].map { |c| ::SlackAppRequestHandler::Parameters::EventApi::Link.new(c) }
           @message_ts = params['message_ts']
           @message_ts_f = params['message_ts'].to_f
           @thread_ts = params['thread_ts']

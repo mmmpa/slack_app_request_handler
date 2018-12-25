@@ -12,7 +12,7 @@ module SlackAppRequestHandler
           @params = params
           @event_wrapper = event_wrapper && ::SlackAppRequestHandler::Parameters::EventWrapper.new(event_wrapper)
           @type = params['type']
-          @user = params['user']
+          @user = ::SlackAppRequestHandler::Parameters::EventApi::User.new(params['user'])
         end
 
         def to_raw

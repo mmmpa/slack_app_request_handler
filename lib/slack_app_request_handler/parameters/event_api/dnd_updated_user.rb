@@ -11,7 +11,7 @@ module SlackAppRequestHandler
         def initialize(params, event_wrapper = nil)
           @params = params
           @event_wrapper = event_wrapper && ::SlackAppRequestHandler::Parameters::EventWrapper.new(event_wrapper)
-          @dnd_status = params['dnd_status']
+          @dnd_status = ::SlackAppRequestHandler::Parameters::EventApi::DndStatus.new(params['dnd_status'])
           @type = params['type']
           @user = params['user']
         end

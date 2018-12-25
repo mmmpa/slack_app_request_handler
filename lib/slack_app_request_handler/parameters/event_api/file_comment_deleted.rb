@@ -12,7 +12,7 @@ module SlackAppRequestHandler
           @params = params
           @event_wrapper = event_wrapper && ::SlackAppRequestHandler::Parameters::EventWrapper.new(event_wrapper)
           @comment = params['comment']
-          @file = params['file']
+          @file = ::SlackAppRequestHandler::Parameters::EventApi::File.new(params['file'])
           @file_id = params['file_id']
           @type = params['type']
         end

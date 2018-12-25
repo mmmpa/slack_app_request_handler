@@ -13,19 +13,15 @@ class ModelsGeneration
     FileUtils.mkdir_p(OUTPUT_DIR.join('parameters', 'event_api'))
 
     # TypeDetectionGeneration.new(meta: meta, output: OUTPUT_DIR.join('type_detection.rb')).execute!
-    ParamsModelsGeneration.new(details: details, event_types: event_types, output: OUTPUT_DIR.join('parameters', 'event_api')).execute!
+    ParamsModelsGeneration.new(definitions: definitions, output: OUTPUT_DIR.join('parameters', 'event_api')).execute!
 
     `bundle exec rubocop -a lib/slack_app_request_handler/parameters` if ENV['WITH_FORMATTER']
   end
 
   private
 
-  def event_types
-    @event_types ||= SlackResources::Resources::EventApi.event_types.sort
-  end
-
-  def details
-    @schemas ||= event_types.map { |name| SlackResources::Resources::EventApi.detail(name) }
+  def definitions
+    @definitions ||= SlackResources::Resources::EventApi.schemas['definitions']
   end
 
   def meta

@@ -15,7 +15,7 @@ module SlackAppRequestHandler
           @event_ts = params['event_ts']
           @event_ts_f = params['event_ts'].to_f
           @has_pins = params['has_pins']
-          @item = params['item']
+          @item = ::SlackAppRequestHandler::Parameters::EventApi::PinItem.new(params['item'])
           @type = params['type']
           @user = params['user']
         end

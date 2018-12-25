@@ -13,7 +13,7 @@ module SlackAppRequestHandler
           @event_wrapper = event_wrapper && ::SlackAppRequestHandler::Parameters::EventWrapper.new(event_wrapper)
           @event_ts = params['event_ts']
           @event_ts_f = params['event_ts'].to_f
-          @item = params['item']
+          @item = ::SlackAppRequestHandler::Parameters::EventApi::StarItem.new(params['item'])
           @type = params['type']
           @user = params['user']
         end
