@@ -12,6 +12,8 @@ class ParamsModelsGeneration
     FileUtils.mkdir_p(@output)
 
     @definitions.each do |k, v| # rubocop:disable Metrics/BlockLength:
+      next unless object?(k)
+
       file_name_base = k.tr('.', '_')
       class_name = file_name_base.camelize
       attributes = v['properties']
