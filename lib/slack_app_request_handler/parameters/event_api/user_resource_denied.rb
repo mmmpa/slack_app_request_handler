@@ -6,19 +6,15 @@ module SlackAppRequestHandler
   module Parameters
     module EventApi
       class UserResourceDenied
-        attr_reader :params, :event_wrapper, :token, :team_id, :api_app_id, :event, :type, :authed_teams, :event_id, :event_time
+        attr_reader :params, :event_wrapper, :scopes, :trigger_id, :type, :user
 
         def initialize(params, event_wrapper = nil)
           @params = params
           @event_wrapper = event_wrapper && ::SlackAppRequestHandler::Parameters::EventWrapper.new(event_wrapper)
-          @token = params['token']
-          @team_id = params['team_id']
-          @api_app_id = params['api_app_id']
-          @event = ::SlackAppRequestHandler::Parameters::EventApi::UserResourceDeniedEvent.new(params['event'])
+          @scopes = params['scopes']
+          @trigger_id = params['trigger_id']
           @type = params['type']
-          @authed_teams = params['authed_teams']
-          @event_id = params['event_id']
-          @event_time = params['event_time']
+          @user = params['user']
         end
 
         def to_raw

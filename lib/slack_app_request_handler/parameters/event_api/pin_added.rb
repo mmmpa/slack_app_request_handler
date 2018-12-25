@@ -6,17 +6,17 @@ module SlackAppRequestHandler
   module Parameters
     module EventApi
       class PinAdded
-        attr_reader :params, :event_wrapper, :type, :user, :channel_id, :item, :event_ts
+        attr_reader :params, :event_wrapper, :channel_id, :event_ts, :item, :type, :user
 
         def initialize(params, event_wrapper = nil)
           @params = params
           @event_wrapper = event_wrapper && ::SlackAppRequestHandler::Parameters::EventWrapper.new(event_wrapper)
-          @type = params['type']
-          @user = params['user']
           @channel_id = params['channel_id']
-          @item = ::SlackAppRequestHandler::Parameters::EventApi::PinItem.new(params['item'])
           @event_ts = params['event_ts']
           @event_ts_f = params['event_ts'].to_f
+          @item = params['item']
+          @type = params['type']
+          @user = params['user']
         end
 
         def to_raw

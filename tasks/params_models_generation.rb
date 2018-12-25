@@ -2,12 +2,16 @@ require 'active_support/core_ext/object/blank'
 require 'active_support/core_ext/string/inflections'
 
 class ParamsModelsGeneration
-  def initialize(details:, output:)
+  def initialize(details:, event_types:, output:)
     @details = details
     @output = output
+    @event_types = Set.new(event_types)
   end
 
   def execute!
+    FileUtils.rm_r(@output)
+    FileUtils.mkdir_p(@output)
+
     @details.each do |detail| # rubocop:disable Metrics/BlockLength:
       file_name_base = detail['event'].tr('.', '_')
       class_name = file_name_base.camelize
@@ -103,7 +107,7 @@ class ParamsModelsGeneration
   end
 
   def object?(key)
-    model_names.include?(key)
+    @event_types.include?(key)
   end
 
   def timestamps?(key)
@@ -112,9 +116,5 @@ class ParamsModelsGeneration
 
   def timestamps
     @timestamps ||= Set.new(@schemas.select { |_, h| p h['$ref'].to_s.match(/timestamp$/) }.keys)
-  end
-
-  def model_names
-    @model_names ||= Set.new(models.keys)
   end
 end

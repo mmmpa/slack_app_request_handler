@@ -6,18 +6,18 @@ module SlackAppRequestHandler
   module Parameters
     module EventApi
       class ReactionAdded
-        attr_reader :params, :event_wrapper, :type, :user, :reaction, :item_user, :item, :event_ts
+        attr_reader :params, :event_wrapper, :event_ts, :item, :item_user, :reaction, :type, :user
 
         def initialize(params, event_wrapper = nil)
           @params = params
           @event_wrapper = event_wrapper && ::SlackAppRequestHandler::Parameters::EventWrapper.new(event_wrapper)
-          @type = params['type']
-          @user = params['user']
-          @reaction = params['reaction']
-          @item_user = params['item_user']
-          @item = ::SlackAppRequestHandler::Parameters::EventApi::ReactionItem.new(params['item'])
           @event_ts = params['event_ts']
           @event_ts_f = params['event_ts'].to_f
+          @item = params['item']
+          @item_user = params['item_user']
+          @reaction = params['reaction']
+          @type = params['type']
+          @user = params['user']
         end
 
         def to_raw

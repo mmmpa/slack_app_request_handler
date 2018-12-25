@@ -6,13 +6,13 @@ module SlackAppRequestHandler
   module Parameters
     module EventApi
       class SubteamUpdated
-        attr_reader :params, :event_wrapper, :type, :subteam
+        attr_reader :params, :event_wrapper, :subteam, :type
 
         def initialize(params, event_wrapper = nil)
           @params = params
           @event_wrapper = event_wrapper && ::SlackAppRequestHandler::Parameters::EventWrapper.new(event_wrapper)
+          @subteam = params['subteam']
           @type = params['type']
-          @subteam = ::SlackAppRequestHandler::Parameters::EventApi::Subteam.new(params['subteam'])
         end
 
         def to_raw

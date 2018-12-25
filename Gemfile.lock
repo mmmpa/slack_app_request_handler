@@ -62,7 +62,7 @@ GEM
       rack (~> 2.0)
       rack-protection (= 2.0.5)
       tilt (~> 2.0)
-    slack_resources (0.1.7)
+    slack_resources (0.1.8)
     thread_safe (0.3.6)
     tilt (2.0.9)
     tzinfo (1.2.5)

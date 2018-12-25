@@ -6,15 +6,15 @@ module SlackAppRequestHandler
   module Parameters
     module EventApi
       class FileCommentAdded
-        attr_reader :params, :event_wrapper, :type, :comment, :file_id, :file
+        attr_reader :params, :event_wrapper, :comment, :file, :file_id, :type
 
         def initialize(params, event_wrapper = nil)
           @params = params
           @event_wrapper = event_wrapper && ::SlackAppRequestHandler::Parameters::EventWrapper.new(event_wrapper)
-          @type = params['type']
-          @comment = ::SlackAppRequestHandler::Parameters::EventApi::Comment.new(params['comment'])
+          @comment = params['comment']
+          @file = params['file']
           @file_id = params['file_id']
-          @file = ::SlackAppRequestHandler::Parameters::EventApi::File.new(params['file'])
+          @type = params['type']
         end
 
         def to_raw

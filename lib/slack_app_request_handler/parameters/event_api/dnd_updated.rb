@@ -6,14 +6,14 @@ module SlackAppRequestHandler
   module Parameters
     module EventApi
       class DndUpdated
-        attr_reader :params, :event_wrapper, :type, :user, :dnd_status
+        attr_reader :params, :event_wrapper, :dnd_status, :type, :user
 
         def initialize(params, event_wrapper = nil)
           @params = params
           @event_wrapper = event_wrapper && ::SlackAppRequestHandler::Parameters::EventWrapper.new(event_wrapper)
+          @dnd_status = params['dnd_status']
           @type = params['type']
           @user = params['user']
-          @dnd_status = ::SlackAppRequestHandler::Parameters::EventApi::DndStatus.new(params['dnd_status'])
         end
 
         def to_raw

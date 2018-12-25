@@ -6,13 +6,13 @@ module SlackAppRequestHandler
   module Parameters
     module EventApi
       class UrlVerification
-        attr_reader :params, :event_wrapper, :token, :challenge, :type
+        attr_reader :params, :event_wrapper, :challenge, :token, :type
 
         def initialize(params, event_wrapper = nil)
           @params = params
           @event_wrapper = event_wrapper && ::SlackAppRequestHandler::Parameters::EventWrapper.new(event_wrapper)
-          @token = params['token']
           @challenge = params['challenge']
+          @token = params['token']
           @type = params['type']
         end
 

@@ -13,7 +13,7 @@ class ModelsGeneration
     FileUtils.mkdir_p(OUTPUT_DIR.join('parameters', 'event_api'))
 
     # TypeDetectionGeneration.new(meta: meta, output: OUTPUT_DIR.join('type_detection.rb')).execute!
-    ParamsModelsGeneration.new(details: details, output: OUTPUT_DIR.join('parameters', 'event_api')).execute!
+    ParamsModelsGeneration.new(details: details, event_types: event_types, output: OUTPUT_DIR.join('parameters', 'event_api')).execute!
 
     `bundle exec rubocop -a lib/slack_app_request_handler/parameters` if ENV['WITH_FORMATTER']
   end
