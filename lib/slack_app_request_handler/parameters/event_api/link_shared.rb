@@ -6,19 +6,19 @@ module SlackAppRequestHandler
   module Parameters
     module EventApi
       class LinkShared
-        attr_reader :params, :event_wrapper, :token, :team_id, :api_app_id, :event, :type, :authed_users, :event_id, :event_time
+        attr_reader :params, :event_wrapper, :channel, :links, :message_ts, :thread_ts, :type, :user
 
         def initialize(params, event_wrapper = nil)
           @params = params
           @event_wrapper = event_wrapper && ::SlackAppRequestHandler::Parameters::EventWrapper.new(event_wrapper)
-          @token = params['token']
-          @team_id = params['team_id']
-          @api_app_id = params['api_app_id']
-          @event = ::SlackAppRequestHandler::Parameters::EventApi::LinkSharedEvent.new(params['event'])
+          @channel = params['channel']
+          @links = params['links'].map { |c| ::SlackAppRequestHandler::Parameters::EventApi::Link.new(c) }
+          @message_ts = params['message_ts']
+          @message_ts_f = params['message_ts'].to_f
+          @thread_ts = params['thread_ts']
+          @thread_ts_f = params['thread_ts'].to_f
           @type = params['type']
-          @authed_users = params['authed_users']
-          @event_id = params['event_id']
-          @event_time = params['event_time']
+          @user = params['user']
         end
 
         def to_raw

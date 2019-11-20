@@ -6,26 +6,26 @@ module SlackAppRequestHandler
   module Parameters
     module EventApi
       class Subteam
-        attr_reader :params, :event_wrapper, :id, :team_id, :is_usergroup, :name, :description, :handle, :is_external, :date_create, :date_update, :date_delete, :auto_type, :created_by, :updated_by, :deleted_by, :prefs, :user_count
+        attr_reader :params, :event_wrapper, :auto_type, :created_by, :date_create, :date_delete, :date_update, :deleted_by, :description, :handle, :id, :is_external, :is_usergroup, :name, :prefs, :team_id, :updated_by, :user_count
 
         def initialize(params, event_wrapper = nil)
           @params = params
           @event_wrapper = event_wrapper && ::SlackAppRequestHandler::Parameters::EventWrapper.new(event_wrapper)
-          @id = params['id']
-          @team_id = params['team_id']
-          @is_usergroup = params['is_usergroup']
-          @name = params['name']
-          @description = params['description']
-          @handle = params['handle']
-          @is_external = params['is_external']
-          @date_create = params['date_create']
-          @date_update = params['date_update']
-          @date_delete = params['date_delete']
           @auto_type = params['auto_type']
           @created_by = params['created_by']
-          @updated_by = params['updated_by']
+          @date_create = params['date_create']
+          @date_delete = params['date_delete']
+          @date_update = params['date_update']
           @deleted_by = params['deleted_by']
+          @description = params['description']
+          @handle = params['handle']
+          @id = params['id']
+          @is_external = params['is_external']
+          @is_usergroup = params['is_usergroup']
+          @name = params['name']
           @prefs = ::SlackAppRequestHandler::Parameters::EventApi::Prefs.new(params['prefs'])
+          @team_id = params['team_id']
+          @updated_by = params['updated_by']
           @user_count = params['user_count']
         end
 

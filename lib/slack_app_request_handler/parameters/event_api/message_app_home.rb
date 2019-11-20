@@ -6,19 +6,20 @@ module SlackAppRequestHandler
   module Parameters
     module EventApi
       class MessageAppHome
-        attr_reader :params, :event_wrapper, :token, :team_id, :api_app_id, :event, :type, :authed_teams, :event_id, :event_time
+        attr_reader :params, :event_wrapper, :channel, :channel_type, :event_ts, :text, :ts, :type, :user
 
         def initialize(params, event_wrapper = nil)
           @params = params
           @event_wrapper = event_wrapper && ::SlackAppRequestHandler::Parameters::EventWrapper.new(event_wrapper)
-          @token = params['token']
-          @team_id = params['team_id']
-          @api_app_id = params['api_app_id']
-          @event = ::SlackAppRequestHandler::Parameters::EventApi::MessageEvent.new(params['event'])
+          @channel = params['channel']
+          @channel_type = params['channel_type']
+          @event_ts = params['event_ts']
+          @event_ts_f = params['event_ts'].to_f
+          @text = params['text']
+          @ts = params['ts']
+          @ts_f = params['ts'].to_f
           @type = params['type']
-          @authed_teams = params['authed_teams']
-          @event_id = params['event_id']
-          @event_time = params['event_time']
+          @user = params['user']
         end
 
         def to_raw

@@ -6,14 +6,14 @@ module SlackAppRequestHandler
   module Parameters
     module EventApi
       class TeamDomainChange
-        attr_reader :params, :event_wrapper, :type, :url, :domain
+        attr_reader :params, :event_wrapper, :domain, :type, :url
 
         def initialize(params, event_wrapper = nil)
           @params = params
           @event_wrapper = event_wrapper && ::SlackAppRequestHandler::Parameters::EventWrapper.new(event_wrapper)
+          @domain = params['domain']
           @type = params['type']
           @url = params['url']
-          @domain = params['domain']
         end
 
         def to_raw

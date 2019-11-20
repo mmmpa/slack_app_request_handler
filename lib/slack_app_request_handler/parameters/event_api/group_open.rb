@@ -6,14 +6,14 @@ module SlackAppRequestHandler
   module Parameters
     module EventApi
       class GroupOpen
-        attr_reader :params, :event_wrapper, :type, :user, :channel
+        attr_reader :params, :event_wrapper, :channel, :type, :user
 
         def initialize(params, event_wrapper = nil)
           @params = params
           @event_wrapper = event_wrapper && ::SlackAppRequestHandler::Parameters::EventWrapper.new(event_wrapper)
+          @channel = params['channel']
           @type = params['type']
           @user = params['user']
-          @channel = params['channel']
         end
 
         def to_raw

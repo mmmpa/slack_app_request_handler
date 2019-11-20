@@ -6,14 +6,14 @@ module SlackAppRequestHandler
   module Parameters
     module EventApi
       class FileCreated
-        attr_reader :params, :event_wrapper, :type, :file_id, :file
+        attr_reader :params, :event_wrapper, :file, :file_id, :type
 
         def initialize(params, event_wrapper = nil)
           @params = params
           @event_wrapper = event_wrapper && ::SlackAppRequestHandler::Parameters::EventWrapper.new(event_wrapper)
-          @type = params['type']
-          @file_id = params['file_id']
           @file = ::SlackAppRequestHandler::Parameters::EventApi::File.new(params['file'])
+          @file_id = params['file_id']
+          @type = params['type']
         end
 
         def to_raw
